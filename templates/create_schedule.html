@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+{% block content %}
+
+<style>
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    .hh {
+        color: #333;
+        margin-bottom: 25px;
+        font-size: 28px;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 8px 12px;
+        margin-top: 5px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th, table td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: left;
+    }
+
+    table th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px 25px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    hr {
+        margin: 30px 0;
+        border: none;
+        border-top: 1px solid #ccc;
+    }
+
+    p {
+        font-size: 16px;
+        color: #555;
+        margin-top: 10px;
+    }
+
+    .time-info {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #e7f3ff;
+        border-left: 5px solid #2196F3;
+        font-weight: bold;
+    }
+    .msg-box {
+    margin-bottom: 20px;
+}
+
+.msg {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/*  Error message in red */
+.msg.error {
+    background-color: #ffe5e5;
+    border-left: 5px solid #ff2d2d;
+    color: #b30000;
+}
+
+/* Success message in green */
+.msg.success {
+    background-color: #e5ffe5;
+    border-left: 5px solid #1f8f1f;
+    color: #145214;
+}
+</style>
+{% if messages %}
+<div class="msg-box">
+    {% for msg in messages %}
+        <p class="msg {{ msg.tags }}">{{ msg }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="container">
+    <h2 class="hh">📅 Create Exam Schedule & Assign Room</h2>
+
+    <form method="get">
+        <label>Select Subject:</label>
+        <select name="subject" onchange="this.form.submit()">
+            <option value="">-- Select --</option>
+            {% for s in subjects %}
+            <option value="{{ s.id }}" {% if selected_subject and s.id == selected_subject.id %}selected{% endif %}>
+                {{ s.name }}
+            </option>
+            {% endfor %}
+        </select>
+
+        <label>Select Date:</label>
+        <input type="date" name="date" value="{{ selected_date }}" onchange="this.form.submit()">
+    </form>
+
+    {% if selected_subject and selected_date %}
+    <hr>
+    <h3>📘 Students Booked</h3>
+
+    <table>
+        <tr>
+            <th>Student</th>
+            <th>Username</th>
+        </tr>
+        {% for s in students %}
+        <tr>
+            <td>{{ s.student.get_full_name }}</td>
+            <td>{{ s.student.username }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">No students booked.</td></tr>
+        {% endfor %}
+    </table>
+
+    
+
+    <form method="post" action="?subject={{ selected_subject.id }}&date={{ selected_date }}">
+        {% csrf_token %}
+        <label>Select Faculty</label>
+    <select name="faculty" class="form-control" required>
+        <option value="">-- Choose Faculty --</option>
+        {% for f in faculties %}
+            <option value="{{ f.id }}">{{ f.username }}</option>
+        {% endfor %}
+    </select>
+    <h3> Assign Room</h3>
+    <p>Total Students: {{ total_seats|default:0 }} | Max Seats per Room: 30</p>
+        <label>Room Number</label>
+        <input type="text" name="room" placeholder="Ex: Room-101" required>
+
+        {% if schedule %}
+        <div class="time-info">
+            ⏰ Exam Start: 
+            <input type="time" name="start_time" value="{{ schedule.start_time|default:'' }}" required>
+            ⏰ Exam End: 
+            <input type="time" name="end_time" value="{{ schedule.end_time|default:'' }}" required>
+        </div>
+        {% endif %}
+
+        <button type="submit">Assign Room</button>
+    </form>
+    {% endif %}  <!-- Closing if selected_subject and selected_date -->
+</div>
+
+{% endblock %}

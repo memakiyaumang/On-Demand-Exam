@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Register</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-box">
+        <h2>Student Register</h2>
+
+        <!-- Messages -->
+        {% if messages %}
+            <div id="msg-container">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+            <script>
+              setTimeout(function() {
+                let msgBox = document.getElementById("msg-container");
+                if (msgBox) {
+                  msgBox.style.transition = "opacity 0.5s ease";
+                  msgBox.style.opacity = "0";
+                  setTimeout(() => msgBox.remove(), 500);
+                }
+              }, 3000);
+            </script>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <!-- Student ID -->
+            <div class="form-group">
+                {{ form.student_id }}
+                {% for error in form.student_id.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+                {{ form.username }}
+                {% for error in form.username.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- First Name -->
+            <div class="form-group">
+                {{ form.first_name }}
+                {% for error in form.first_name.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group">
+                {{ form.last_name }}
+                {% for error in form.last_name.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                {{ form.email }}
+                {% for error in form.email.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                {{ form.phone_number }}
+                {% for error in form.phone_number.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Semester -->
+            <div class="form-group">
+                {{ form.semester }}
+                {% for error in form.semester.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                {{ form.password }}
+                {% for error in form.password.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                {{ form.confirm_password }}
+                {% for error in form.confirm_password.errors %}
+                    <p class="error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn-register">Register</button>
+        </form>
+
+        <a href="{% url 'student_login' %}" class="register-link">Already have an account? Login</a>
+    </div>
+</body>
+</html>

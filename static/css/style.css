@@ -1,0 +1,736 @@
+/* ----------- GLOBAL STYLES ----------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f9;   /* Light background */
+    color: #333;
+}
+
+.main-content {
+    margin-left: 200px;       /* leaves space for sidebar */
+    padding: 25px 40px;
+    width: calc(100% - 205px);
+    background: #f4f6f9;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+
+/* Reset heading margins */
+h1, h2, h3, h4 {
+    margin: 0;
+}
+
+/* ----------- SIDEBAR ----------- */
+.sidebar {
+    width: 200px;
+    background: linear-gradient(180deg, #2563eb, #1e3a8a);
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;          /* ✅ ensure it stays above content */
+}
+
+.sidebar .logo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.sidebar .logo i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+.sidebar .logo h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar ul li {
+    margin: 12px 0;
+}
+.sidebar ul li a {
+    display: block;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: white;
+    font-weight: 500;
+    transition: 0.3s;
+}
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Sidebar Logout Button */
+.sidebar .logout {
+    display: block;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.15);
+    font-weight: 600;
+    transition: 0.3s;
+    position: absolute;   /* ✅ stick to bottom */
+    bottom: 70px;         /* spacing from bottom */
+    left: 20px;
+    right: 20px;
+}
+.sidebar .logout:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ----------- GLOBAL ----------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+}
+
+/* ----------- DASHBOARD WRAPPER ----------- */
+.dashboard {
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-right: 100px;
+}
+
+/* ----------- HEADINGS ----------- */
+.welcome {
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* ----------- CARDS ----------- */
+.cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1;
+    min-width: 200px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #444;
+}
+
+.card p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Card colors */
+.card.blue { border-left: 6px solid #3498db; }
+.card.green { border-left: 6px solid #2ecc71; }
+.card.purple { border-left: 6px solid #9b59b6; }
+.card.red { border-left: 6px solid #f16038; }
+
+/* ----------- TABLE ----------- */
+.table-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+
+.table-container h3 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+thead {
+    background: #3498db;
+    color: #fff;
+}
+
+thead th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+}
+
+tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.empty {
+    text-align: center;
+    color: #888;
+    padding: 15px;
+    font-style: italic;
+}
+/* schedule-page */
+.schedule-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    padding: 20px;
+}
+
+/* Header */
+.schedule-page .header-card {
+    background: linear-gradient(135deg, #0047FF, #007bff);
+    color: white;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 71, 255, 0.3);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.schedule-page .header-card h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* Main Container */
+.schedule-page .schedule-container {
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Sub Headings */
+.schedule-page h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Form Groups */
+.schedule-page .form-group {
+    margin-bottom: 15px;
+}
+
+.schedule-page label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+    color: #444;
+}
+
+/* Inputs */
+.schedule-page input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Buttons */
+.schedule-page .btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.schedule-page .btn-primary {
+    background: #0047FF;
+    color: white;
+}
+.schedule-page .btn-primary:hover {
+    background: #0037cc;
+}
+
+.schedule-page .btn-danger {
+    background: #e74c3c;
+    color: white;
+}
+.schedule-page .btn-danger:hover {
+    background: #c0392b;
+}
+
+/* Existing Schedule List */
+.schedule-page .schedule-list {
+    margin-top: 25px;
+}
+
+.schedule-page .schedule-card {
+    background: #fafafa;
+    border: 1px solid #eee;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.schedule-page .schedule-card p {
+    margin: 0 0 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Empty State */
+.schedule-page .no-schedule {
+    font-style: italic;
+    color: #777;
+}
+
+/* Messages */
+.schedule-page .messages {
+    margin-top: 15px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #e9f7ef;
+    border-left: 4px solid #28a745;
+    color: #155724;
+}
+
+
+/* ---------- ATTENDANCE PAGE ---------- */
+.attendance-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    padding: 20px;
+}
+
+.attendance-page .header-card {
+    background: linear-gradient(135deg, #007bff, #2563eb);
+    color: white;
+    padding: 18px 22px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 71, 255, 0.3);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.attendance-page .header-card h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Form container */
+.attendance-page .attendance-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Form groups */
+.attendance-page .form-group {
+    margin-bottom: 15px;
+}
+
+.attendance-page label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+/* Inputs */
+.attendance-page input[type="date"],
+.attendance-page select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Buttons */
+.attendance-page .btn {
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.attendance-page .btn-primary {
+    background: #007bff;
+    color: white;
+}
+.attendance-page .btn-primary:hover {
+    background: #0056b3;
+}
+
+/* Tip text */
+.attendance-page .tip {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555;
+    font-style: italic;
+}
+
+/* ------------ ATTENDANCE SHEET PAGE ------------ */
+.attendance-sheet-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f8fafc;
+    padding: 20px;
+}
+
+/* Page title */
+.attendance-sheet-page .page-title {
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+    color: #2563eb;
+    margin-bottom: 20px;
+}
+
+/* Empty state message */
+.attendance-sheet-page .empty-state {
+    text-align: center;
+    background: #fff8e6;
+    border: 1px solid #ffe58f;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Header card */
+.attendance-sheet-page .sheet-header {
+    background: linear-gradient(135deg, #007bff, #2563eb);
+    color: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 71, 255, 0.3);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+/* Assign form */
+.attendance-sheet-page .assign-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.attendance-sheet-page .assign-form select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* Buttons */
+.attendance-sheet-page .btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.attendance-sheet-page .btn-success {
+    background: #28a745;
+    color: white;
+}
+.attendance-sheet-page .btn-success:hover { background: #218838; }
+
+.attendance-sheet-page .btn-warning {
+    background: #ffc107;
+    color: black;
+}
+.attendance-sheet-page .btn-warning:hover { background: #e0a800; }
+
+.attendance-sheet-page .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+.attendance-sheet-page .btn-secondary:hover { background: #565e64; }
+
+.attendance-sheet-page .btn-outline {
+    background: transparent;
+    border: 1px solid #2563eb;
+    color: #2563eb;
+}
+.attendance-sheet-page .btn-outline:hover {
+    background: #2563eb;
+    color: white;
+}
+
+/* Table */
+.attendance-sheet-page .attendance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.attendance-sheet-page .attendance-table th,
+.attendance-sheet-page .attendance-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.attendance-sheet-page .attendance-table th {
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+}
+
+.attendance-sheet-page .attendance-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.attendance-sheet-page .attendance-table tr:hover {
+    background: #eef5ff;
+}
+
+.attendance-sheet-page .signature-cell {
+    height: 40px;
+    min-width: 220px;
+}
+
+/* manage subjects */
+/* ----------- PAGE HEADINGS ----------- */
+.page-heading {
+    background: linear-gradient(135deg, #007bff, #2563eb);
+    color: white;
+    padding: 16px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 71, 255, 0.3);
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+
+/* ----------- FORM FIELDS ----------- */
+.form-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+form label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 6px;
+    display: inline-block;
+}
+
+form .form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 12px;
+}
+
+/* Focus effect */
+form .form-control:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 6px rgba(37, 99, 235, 0.3);
+    outline: none;
+}
+
+/* Placeholder */
+form .form-control::placeholder {
+    color: #aaa;
+    font-size: 13px;
+}
+
+/* Buttons inside forms */
+form .btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Primary (Add / Save) */
+form .btn-success {
+    background: #28a745;
+    color: #fff;
+}
+form .btn-success:hover {
+    background: #218838;
+}
+
+/* Secondary / Cancel */
+form .btn-secondary {
+    background: #6c757d;
+    color: #fff;
+}
+form .btn-secondary:hover {
+    background: #565e64;
+}
+
+/* ------------------- General Button ------------------- */
+.btn {
+    display: inline-block;
+    padding: 8px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.25s ease-in-out;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* Edit Button */
+.btn-edit {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: white;
+}
+.btn-edit:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    transform: translateY(-2px);
+}
+
+/* Delete Button */
+.btn-delete {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+}
+.btn-delete:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-2px);
+}
+
+/* Cancel Button */
+.btn-cancel {
+    background: #f3f4f6;
+    color: #374151;
+    border: 2px solid #9ca3af;
+}
+.btn-cancel:hover {
+    background: #e5e7eb;
+    color: #111827;
+    border-color: #6b7280;
+    transform: translateY(-2px);
+}
+
+/* Update/Save Button */
+.btn-save {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+.btn-save:hover {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-2px);
+}
+
+/* ---------------- Manage Subjects Messages ---------------- */
+.manage-subjects-messages {
+    margin: 15px 0;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.12);
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Success */
+.manage-subjects-messages.success {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+/* Error */
+.manage-subjects-messages.error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+/* Warning */
+.manage-subjects-messages.warning {
+    background: #fffbeb;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+}
+
+/* Info */
+.manage-subjects-messages.info {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #3b82f6;
+}
+
+/* Small animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+

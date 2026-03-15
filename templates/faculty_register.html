@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Faculty Registration</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>👨‍🏫 Faculty Register</h2>
+
+            <!-- Messages -->
+            {% if messages %}
+                <div id="msg-container">
+                    {% for message in messages %}
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+                <script>
+                  setTimeout(function() {
+                    let msgBox = document.getElementById("msg-container");
+                    if (msgBox) {
+                      msgBox.style.transition = "opacity 0.5s ease";
+                      msgBox.style.opacity = "0";
+                      setTimeout(() => msgBox.remove(), 500);
+                    }
+                  }, 3000);
+                </script>
+            {% endif %}
+
+            <!-- Register Form -->
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn-register">Register</button>
+            </form>
+                <a href="{% url 'faculty_login' %}" class="register-link">Already have account? Login</a>
+            
+        </div>
+    </div>
+</body>
+</html>

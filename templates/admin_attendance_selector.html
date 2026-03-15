@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Attendance Sheet{% endblock %}
+
+{% block content %}
+<div class="attendance-page"> <!-- ✅ wrapper for scoped CSS -->
+
+  <!-- Gradient Header -->
+  <div class="header-card">
+    <h2>Generate Attendance Sheet</h2>
+  </div>
+
+  <!-- Form Container -->
+  <div class="attendance-container">
+    <form id="selectorForm" method="GET" action="{% url 'attendance_show' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <select name="subject" required>
+        <option value="">-- Select subject --</option>
+        {% for id, label in subjects %}
+          <option value="{{ id }}">{{ label }}</option>
+        {% endfor %}
+      </select>
+
+
+       <label for="date">Date:</label>
+    <select name="date" id="date" class="form-control">
+        <option value="">-- Select date --</option>
+        {% for d in dates %}
+            <!-- ✅ value is machine format, label is human friendly -->
+            <option value="{{ d|date:'Y-m-d' }}">{{ d|date:'M d, Y' }}</option>
+        {% endfor %}
+    </select>
+
+
+
+
+
+      <button type="submit" class="btn btn-primary">Show Attendance Sheet</button>
+    </form>
+
+    <p class="tip">💡 After showing the sheet you can assign a faculty and export Word File.</p>
+  </div>
+</div>
+{% endblock %}

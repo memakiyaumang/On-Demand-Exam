@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>On Demand Exam Management System</title>
+  <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <h1>On Demand Exam Management System</h1>
+    <p>Comprehensive examination management for educational institutions</p>
+  </header>
+
+  <!-- Portal Section -->
+  <section class="portals">
+    
+    <!-- Admin Portal -->
+    <div class="portal-card">
+      <div class="portal-icon">🛡️</div>
+      <h2>Admin Portal</h2>
+      <p>Manage exam configurations, paper allocations, and system settings.</p>
+      <a href="{% url 'admin_login' %}" class="btn admin-btn">Admin Login</a>
+    </div>
+
+    <!-- Faculty Portal -->
+    <div class="portal-card">
+      <div class="portal-icon">👨‍🏫</div>
+      <h2>Faculty Portal</h2>
+      <p>Access allocated papers, enter marks, and track evaluation progress.</p>
+      <a href="{% url 'faculty_login' %}" class="btn faculty-btn">Faculty Login</a>
+    </div>
+
+    <!-- Student Portal -->
+    <div class="portal-card">
+      <div class="portal-icon">📖</div>
+      <h2>Student Portal</h2>
+      <p>Register for exams, view schedules, and check results.</p>
+      <a href="{% url 'student_login' %}" class="btn student-btn">Student Login</a>
+    </div>
+
+  </section>
+
+</body>
+</html>

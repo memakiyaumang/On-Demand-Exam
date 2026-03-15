@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Set Exam Schedule{% endblock %}
+
+{% block content %}
+<div class="schedule-page">
+
+    <!-- Gradient Header -->
+    <div class="header-card">
+        <h2>Set Exam Schedule</h2>
+    </div>
+
+    <!-- Main Container -->
+    <div class="schedule-container">
+
+        <!-- Add Duration Form -->
+        <form method="post" class="schedule-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Add Exam Duration</button>
+        </form>
+
+        <!-- Existing Durations -->
+        <div class="schedule-list">
+            <h3>Existing Schedules</h3>
+            {% for schedule in schedules %}
+                <div class="schedule-card">
+                    <p><strong>Duration:</strong> {{ schedule.start_date }} → {{ schedule.end_date }}</p>
+                    <form method="post" action="{% url 'delete_schedule' schedule.id %}"
+                          onsubmit="return confirm('Are you sure you want to delete this schedule?');">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            {% empty %}
+                <p class="no-schedule">No schedules available yet.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Messages -->
+        {% if messages %}
+            <div id="msg-container" class="messages">
+                {% for msg in messages %}
+                    <p class="{% if msg.tags %}{{ msg.tags }}{% endif %}">{{ msg }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div><!-- end schedule-container -->
+
+</div><!-- end schedule-page -->
+
+<script>
+// 🔹 Auto-hide Django messages after 3s
+setTimeout(function() {
+    let msgBox = document.getElementById("msg-container");
+    if (msgBox) {
+      msgBox.style.transition = "opacity 0.5s ease";
+      msgBox.style.opacity = "0";
+      setTimeout(() => msgBox.remove(), 500);
+    }
+}, 3000);
+</script>
+
+{% endblock %}

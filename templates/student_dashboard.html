@@ -1,0 +1,126 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+{% block content %}
+{% if messages %}
+    <div id="msg-container" class="msg-box">
+        {% for msg in messages %}
+            <p class="{{ msg.tags }}">{{ msg }}</p>
+        {% endfor %}
+    </div>
+{% endif %}
+        
+<a href="{% url 'student_logout' %}" class="logout-btn">Logout</a>
+
+<div class="dashboard">
+    <!-- Main Content -->
+    <div class="content">
+        <h1>👋 Welcome, {{ student.get_full_name|default:student.username }}
+           <span class="semester-info">(Semester: {{ student.semester }})</span>
+        </h1>
+
+        <h2>📅 Book Your Exam</h2>
+
+        <!-- Calendar -->
+        <div id="calendar" class="calendar-box"></div>
+
+        <!-- Booking Form -->
+        <form method="POST" class="form-box">
+            {% csrf_token %}
+
+            <label>Subject:</label>
+            <select id="subject" name="subject" required>
+                <option value="">-- Select Subject --</option>
+            </select>
+
+
+            <label>Selected Date:</label>
+            <input type="text" id="selectedDate" name="date" readonly required>
+
+            <button type="submit" class="btn-primary">Book Exam</button>
+        </form>
+        <div class="results-box">
+            <h3>⏰ Your Exam Schedule</h3>
+            <a href="{% url 'student_assigned_rooms' %}" class="btn">View Schedule</a>
+        </div>
+        <div class="results-box">
+            <h3>📊 Your Exam Results</h3>
+            <a href="{% url 'student_results' %}" class="btn">View Results</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    // 🔹 Get allowed schedules from backend
+    var schedules = JSON.parse('{{ schedules_json|escapejs }}');
+
+    // 🔹 Convert schedules into valid ranges
+    var allowedRanges = schedules.map(s => {
+      return {
+        start: new Date(s.start_date),
+        end: new Date(s.end_date)
+      };
+    });
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      selectable: true,
+      // Highlight allowed ranges
+      validRange: function(nowDate) {
+        // Just take min & max from schedules
+        let minDate = allowedRanges[0].start;
+        let maxDate = allowedRanges[0].end;
+        allowedRanges.forEach(r => {
+          if (r.start < minDate) minDate = r.start;
+          if (r.end > maxDate) maxDate = r.end;
+        });
+        return { start: minDate, end: maxDate };
+      },
+      dateClick: function(info) {
+        // ✅ Check if clicked date is inside any allowed schedule
+        let clicked = new Date(info.dateStr);
+        let valid = allowedRanges.some(r => clicked >= r.start && clicked <= r.end);
+
+        if (valid) {
+          document.getElementById("selectedDate").value = info.dateStr;
+        } else {
+          alert("❌ This date is not allowed for booking!");
+        }
+      }
+    });
+
+    calendar.render();
+  });
+
+
+  const subjectsBySem = JSON.parse('{{ subjects_by_sem|escapejs }}');
+  const studentSem = "{{ student.semester }}";  // Get semester of logged-in student
+  const subjectSelect = document.getElementById("subject");
+
+// Reset options
+subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
+
+// Populate subjects for this semester
+if (studentSem && subjectsBySem[studentSem]) {
+    subjectsBySem[studentSem].forEach(subj => {
+        let opt = document.createElement("option");
+        opt.value = subj.id;
+        opt.textContent = subj.code + " - " + subj.name;
+        subjectSelect.appendChild(opt);
+    });
+}
+
+  // Auto-hide messages
+  setTimeout(function() {
+    let msgBox = document.getElementById("msg-container");
+    if (msgBox) {
+      msgBox.style.transition = "opacity 0.5s ease";
+      msgBox.style.opacity = "0";
+      setTimeout(() => msgBox.remove(), 500);
+    }
+  }, 3000);
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Headings */
+.container h2 {
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+.container h3 {
+    margin-top: 25px;
+    color: #374151;
+    border-left: 5px solid #3b82f6;
+    padding-left: 10px;
+    font-size: 20px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+table th {
+    background: #f3f4f6;
+    font-weight: bold;
+    color: #111827;
+}
+table tr:hover {
+    background: #f9fafb;
+}
+
+/* Buttons */
+button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+button[value="approve"] {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+}
+button[value="approve"]:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    transform: scale(1.05);
+}
+button[value="reject"] {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: #fff;
+}
+button[value="reject"]:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: scale(1.05);
+}
+
+/* Messages */
+#msg-container {
+    margin-bottom: 20px;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+}
+#msg-container .success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+#msg-container .error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+#msg-container .warning {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+}

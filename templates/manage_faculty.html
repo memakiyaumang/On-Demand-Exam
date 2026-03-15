@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/manage_faculty.css' %}">
+
+<div class="container">
+    <h2>👨‍🏫 Manage Faculty</h2>
+
+    <!-- Messages -->
+    {% if messages %}
+        <div id="msg-container">
+            {% for message in messages %}
+                <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        <script>
+          setTimeout(function() {
+            let msgBox = document.getElementById("msg-container");
+            if (msgBox) {
+              msgBox.style.transition = "opacity 0.5s ease";
+              msgBox.style.opacity = "0";
+              setTimeout(() => msgBox.remove(), 500);
+            }
+          }, 3000);
+        </script>
+    {% endif %}
+
+    <!-- Pending Faculty -->
+    <h3>Pending Requests</h3>
+    {% if pending_faculty %}
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            {% for faculty in pending_faculty %}
+            <tr>
+                <td>{{ faculty.username }}</td>
+                <td>{{ faculty.email }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="faculty_id" value="{{ faculty.id }}">
+                        <button type="submit" name="action" value="approve">✅ Approve</button>
+                        <button type="submit" name="action" value="reject">❌ Reject</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No pending requests.</p>
+    {% endif %}
+
+    <!-- Approved Faculty -->
+    <h3>Approved Faculty</h3>
+    {% if approved_faculty %}
+        <table>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            {% for faculty in approved_faculty %}
+            <tr>
+                <td>{{ faculty.username }}</td>
+                <td>{{ faculty.email }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="faculty_id" value="{{ faculty.id }}">
+                        <button type="submit" name="action" value="revoke" onclick="return confirm('Revoke this faculty?')">🔄 Revoke</button>
+                        <button type="submit" name="action" value="delete" onclick="return confirm('Delete this faculty permanently?')">🗑️ Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>No approved faculty yet.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="manage-subjects">
+    <div class="page-heading">Manage Subjects</div>
+
+   <!-- Messages -->
+{% if messages %}
+    <div id="msg-container">
+        {% for message in messages %}
+            <p class="manage-subjects-messages {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+    </div>
+    <script>
+      setTimeout(function() {
+        let msgBox = document.getElementById("msg-container");
+        if (msgBox) {
+          msgBox.style.transition = "opacity 0.5s ease";
+          msgBox.style.opacity = "0";
+          setTimeout(() => msgBox.remove(), 500);
+        }
+      }, 3000);
+    </script>
+{% endif %}
+
+
+    <div class="form-card">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-3">{{ form.semester.label_tag }} {{ form.semester }}</div>
+                <div class="col-md-3">{{ form.code.label_tag }} {{ form.code }}</div>
+                <div class="col-md-4">{{ form.name.label_tag }} {{ form.name }}</div>
+                <div class="col-md-2 mt-4"><button type="submit" class="btn btn-success">Add Subject</button></div>
+            </div>
+        </form>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Semester</th>
+                <th>Subject Code</th>
+                <th>Subject Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sub in subjects %}
+            <tr>
+                <td>{{ sub.get_semester_display }}</td>
+                <td>{{ sub.code }}</td>
+                <td>{{ sub.name }}</td>
+                <td>
+                    <a href="{% url 'edit_subject' sub.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                    <a href="{% url 'delete_subject' sub.pk %}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="empty">No subjects found</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

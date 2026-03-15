@@ -1,0 +1,45 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EduExam Admin</title>
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">  
+ 
+</head>
+<body>
+  <div class="wrapper">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h2>📚 EduExam</h2>
+      <ul>
+        <li><a href="{% url 'admin_dashboard' %}"><i class="fa fa-home"></i> Dashboard</a></li>
+        <li><a href="{% url 'set_schedule' %}"><i class="fa fa-calendar"></i> Set Schedule</a></li>
+        <li><a href="{% url 'attendance_selector' %}"><i class="fa fa-users"></i> Attendance Sheet</a></li>
+         
+        <li><a href="{% url 'manage_subjects' %}"><i class="fa fa-user-tie"></i> Manage Subjects</a></li>
+        <li><a href="{% url 'manage_faculty' %}"><i class="fa fa-tasks"></i> Manage Faculty</a></li>
+        <li><a href="{% url 'manage_result' %}"><i class="fa fa-tasks"></i> Manage Result</a></li>
+       <li><a href="{% url 'create_schedule' %}"><i class="fa fa-tasks"></i> Seating Arrangement</a></li>
+       
+    <li>
+        <a href="{% url 'assigned_rooms' %}">
+            <i class="fa fa-tasks"></i> Assigned Rooms
+        </a>
+    </li>
+      
+</li>
+      </ul>
+      <a href="{% url 'admin_logout' %}" class="logout"><i class="fa fa-sign-out-alt"></i> Logout</a>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="main-content" >
+      {% block content %}
+      {% endblock %}
+    </main>
+  </div>
+</body>
+</html>

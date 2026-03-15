@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Results</title>
+  <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+  <style>
+    body {
+      background-color: #f5f6fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .results-container {
+      width: 85%;
+      margin: 50px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1, h3 {
+      text-align: center;
+      color: #0077cc;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px 12px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0077cc;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .no-results {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 50px;
+      color: #555;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background-color: #0077cc;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 500;
+    }
+
+    .back-btn:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+  <div class="results-container">
+    <h1>📊 {{ student.get_full_name|default:student.username }}’s Results</h1>
+    <h3>Semester: {{ student.semester }}</h3>
+
+    {% if results %}
+      <table>
+        <thead>
+          <tr>
+            <th>Subject Code</th>
+            <th>Subject Name</th>
+            <th>Marks</th>
+            <th>Out Of</th>
+            <th>Faculty Name</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for res in results %}
+          <tr>
+            <td>{{ res.subject_code }}</td>
+            <td>{{ res.subject_name }}</td>
+            <td>{{ res.out_of_marks }}</td>
+            <td>50</td>
+            <td>{{ res.faculty_name }}</td>
+            <td>{{ res.r_date|date:"d M Y" }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="no-results">❌ Results not available yet. Please check back later.</p>
+    {% endif %}
+
+    <div style="text-align:center;">
+      <a href="{% url 'student_dashboard' %}" class="back-btn">← Back to Dashboard</a>
+    </div>
+  </div>
+</body>
+</html>

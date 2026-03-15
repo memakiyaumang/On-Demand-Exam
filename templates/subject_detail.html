@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Details</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            padding: 2rem;
+        }
+
+        h2, h4 {
+            color: #1e6fff;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background-color: #6c757d;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        .back-btn:hover {
+            background-color: #5a6268;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #1e6fff;
+            color: #fff;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 70px;
+            padding: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .add-btn {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .add-btn button {
+            background-color: #1e6fff;
+            color: white;
+            padding: 8px 20px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .add-btn button:hover {
+            background-color: #1699c4;
+        }
+
+        .no-data {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 5px solid #ffae00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="card">
+
+        <a href="{% url 'faculty_dashboard' %}" class="back-btn">← Back</a>
+
+        <h2>📘 Subject Details</h2>
+        <p><strong>Code:</strong> {{ subject.code }}</p>
+        <p><strong>Name:</strong> {{ subject.name }}</p>
+        <p><strong>Date:</strong> {{ sheet.date }}</p>
+
+        <hr>
+
+        <h4>📋 Enter Marks</h4>
+
+        {% if assignments %}
+
+        <!-- ⬇️ FORM STARTS HERE — SUBMIT ALL STUDENTS TOGETHER -->
+        <form method="POST" action="{% url 'add_result' %}">
+            {% csrf_token %}
+
+            <!-- Hidden subject details -->
+            <input type="hidden" name="subject_code" value="{{ subject.code }}">
+            <input type="hidden" name="subject_name" value="{{ subject.name }}">
+            <input type="hidden" name="sheet_id" value="{{ sheet.id }}">
+
+            <div class="add-btn">
+                <button type="submit">Add</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Marks (0–50)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for a in assignments %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>
+                        {{ a.student.student_id }}
+                        <input type="hidden" name="student_id[]" value="{{ a.student.student_id }}">
+                    </td>
+
+                    <td>
+                        {{ a.student.first_name }} {{ a.student.last_name }}
+                        <input type="hidden" name="student_name[]" value="{{ a.student.first_name }} {{ a.student.last_name }}">
+                    </td>
+
+                    <td>
+                        {{ sheet.date }}
+                        <input type="hidden" name="r_date[]" value="{{ sheet.date|date:'Y-m-d' }}">
+                    </td>
+
+                    <td>
+                        <input type="text" name="marks[]" 
+       pattern="([A-Za-z]+|([0-9]|[1-4][0-9]|50))"
+       title="Enter letters OR a number between 0 and 50"
+       required>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </form>
+        <!-- ⬆️ FORM ENDS -->
+
+        {% else %}
+        <div class="no-data">No students booked this subject yet.</div>
+        {% endif %}
+
+    </div>
+</div>
+
+</body>
+</html>

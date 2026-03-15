@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container edit-subjects">
+     <!-- Messages -->
+            {% if messages %}
+                <div id="msg-container">
+                    {% for message in messages %}
+                        <p class="{{ message.tags }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+                <script>
+                  setTimeout(function() {
+                    let msgBox = document.getElementById("msg-container");
+                    if (msgBox) {
+                      msgBox.style.transition = "opacity 0.5s ease";
+                      msgBox.style.opacity = "0";
+                      setTimeout(() => msgBox.remove(), 500);
+                    }
+                  }, 3000);
+                </script>
+            {% endif %}
+
+    <div class="form-card">
+        <h2>Edit Subject</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Update</button>
+            <a href="{% url 'manage_subjects' %}" class="btn btn-outline">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

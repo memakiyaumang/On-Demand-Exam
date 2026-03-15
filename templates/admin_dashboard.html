@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="dashboard">
+
+    <!-- Welcome -->
+    <h2 class="welcome">Welcome Admin 🎉</h2>
+    <p class="subtitle">Monitor faculty progress and exam administration tasks.</p>
+
+    <!-- Top Cards -->
+    <div class="cards">
+    <div class="card blue">
+        <h4>Total Students</h4>
+        <p>{{ total_students }}</p>
+    </div>
+    <div class="card green">
+        <h4>Total Faculty</h4>
+        <p>{{ total_faculty }}</p>
+    </div>
+    <div class="card purple">
+        <h4>Total Registrations</h4>
+        <p>{{ total_registrations }}</p>
+    </div>
+    <div class="card red">
+        <h4>Pending results</h4>
+        <p>{{ pending_results }}</p>
+    </div>
+</div>
+
+    <!-- Bookings Table -->
+    <div class="table-container">
+        <h3>📝 Exam Bookings</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Subject</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in bookings %}
+                <tr>
+                    <td>{{ b.student.username }}</td>
+                    <td>{{ b.subject }}</td>
+                    <td>{{ b.date }}</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4" class="empty">No bookings yet.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

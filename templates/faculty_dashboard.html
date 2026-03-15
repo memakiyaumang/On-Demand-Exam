@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Dashboard</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+      color: #333;
+    }
+
+    /* Top Navbar */
+    .navbar {
+      background: #1e6fff;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar h1 {
+      margin: 0;
+      font-size: 20px;
+      letter-spacing: 1px;
+    }
+
+    .logout {
+      text-decoration: none;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .logout:hover {
+      background-color: #c0392b;
+    }
+
+    /* Dashboard Container */
+    .dashboard {
+      max-width: 900px;
+      margin: 30px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .dashboard h2 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .dashboard p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .dashboard h3 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+      color: #34495e;
+    }
+
+    /* Subject List */
+    ul.subject-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.subject-list li a {
+      display: block;
+      background: #ecf0f1;
+      margin-bottom: 12px;
+      padding: 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #2c3e50;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    ul.subject-list li a:hover {
+      background: #dfe6e9;
+      transform: translateX(5px);
+    }
+
+    .no-subjects {
+      padding: 15px;
+      background: #ffeaa7;
+      border-radius: 8px;
+      text-align: center;
+      color: #d35400;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Faculty Dashboard</h1>
+    <a href="{% url 'faculty_logout' %}" class="logout">
+      <i class="fa fa-sign-out-alt"></i> Logout
+    </a>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div class="dashboard">
+    <h2>👨‍🏫 Welcome, {{ request.user.get_full_name|default:request.user.username }}!</h2>
+    <p>Here are your assigned subjects and details.</p>
+
+    <h3>Your Assigned Subjects</h3>
+
+    {% if assigned_sheets %}
+      <ul class="subject-list">
+        {% for sheet in assigned_sheets %}
+          <li>
+            <!-- Link to new page for subject details -->
+            <a href="{% url 'subject_detail' sheet.id %}">
+              <strong>{{ sheet.subject.code }}</strong> - {{ sheet.subject.name }} 
+              <br>
+              <small>📅 Date: {{ sheet.date }}</small>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <div class="no-subjects">No subjects assigned yet.</div>
+    {% endif %}
+  </div>
+
+</body>
+</html>

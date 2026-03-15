@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+.btn-update {
+    text-decoration: none;
+    background-color: #28a745; /* green */
+    color: white;
+}
+
+.btn-delete {
+    text-decoration: none;
+    background-color: #dc3545; /* red */
+    color: white;
+}
+</style>
+{% if messages %}
+<div class="msg-box">
+    {% for msg in messages %}
+        <p class="msg {{ msg.tags }}">{{ msg }}</p>
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container mt-4">
+
+    <h2>🏫 Assigned Rooms</h2>
+ 
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Room</th>
+                <th>Subject</th>
+                <th>Date</th>
+                <th>Total Students</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for room in rooms %}
+            <tr>
+                <td>{{ room.room }}</td>
+                <td>{% if room.subject %}{{ room.subject.name }}{% else %}-{% endif %}</td>
+                <td>{% if room.date %}{{ room.date|date:"Y-m-d" }}{% else %}-{% endif %}</td>
+                <td>{{ room.students.count }}</td>
+                <td>{{ room.start_time }}</td>
+                <td>{{ room.end_time }}</td>
+                <td>
+    <a href="{% url 'update_schedule' room.id %}" class="btn btn-sm btn-update">Update</a>
+    <a href="{% url 'delete_schedule' room.id %}" class="btn btn-sm btn-delete" 
+       onclick="return confirm('Are you sure you want to delete this room?');">Delete</a>
+</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

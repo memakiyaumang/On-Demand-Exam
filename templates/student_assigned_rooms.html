@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Assigned Rooms</title>
+  <link rel="stylesheet" href="{% static 'css/student_dashboard.css' %}">
+  <style>
+    body {
+        background-color: #f5f6fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #fdfdfd;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        color: #333;
+        font-size: 28px;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    table th, table td {
+        border: 1px solid #ddd;
+        padding: 10px 12px;
+        text-align: left;
+    }
+
+    table th {
+        background-color: #0077cc;
+        color: white;
+        font-weight: bold;
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .btn-back {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: white;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    .btn-back:hover {
+        background-color: #218838;
+    }
+
+    .no-rooms {
+        text-align: center;
+        font-size: 18px;
+        color: #555;
+        margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-4">
+    <a href="{% url 'student_dashboard' %}" class="btn-back">🔙 Back to Dashboard</a>
+    <h2>📅 My Assigned Rooms</h2>
+
+    {% if rooms %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Date</th>
+                    <th>Room</th>
+                    <th>Faculty</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for room in rooms %}
+                <tr>
+                    <td>{{ room.subject.name }}</td>
+                    <td>{{ room.date|date:"Y-m-d" }}</td>
+                    <td>{{ room.room }}</td>
+                    <td>{{ room.faculty.username }}</td>
+                    <td>{{ room.start_time }}</td>
+                    <td>{{ room.end_time }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="no-rooms">✅ No assigned rooms pending. All exam results have been declared.</p>
+    {% endif %}
+</div>
+</body>
+</html>

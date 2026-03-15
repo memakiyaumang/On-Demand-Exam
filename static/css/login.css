@@ -1,0 +1,168 @@
+/* -------------- GLOBAL -------------- */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f6f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* -------------- FORM CARD -------------- */
+.login-box {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+.login-box h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #111;
+}
+
+/* Inputs */
+.login-box input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.2s;
+}
+.login-box input:focus {
+    border-color: #2563eb;
+}
+
+/* -------------- BUTTONS (Gradient + Shadow) -------------- */
+.login-box button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Admin button */
+.login-box .btn-admin {
+    background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+.login-box .btn-admin:hover {
+    background: linear-gradient(135deg, #1e40af, #1d4ed8);
+    transform: scale(1.02);
+}
+
+/* Student button */
+.login-box .btn-student {
+    background: linear-gradient(135deg,#fbbf24, #f59e0b);
+}
+.login-box .btn-student:hover {
+    background: linear-gradient(135deg,#f59e0b, #d97706);
+    transform: scale(1.02);
+}
+
+
+/* Faculty button */
+.login-box .btn-faculty {
+    background: linear-gradient(135deg, #22c55e, #16a34a) !important;
+    color: #fff !important;        /* white text for contrast */
+    border: none !important;
+    padding: 10px 20px !important;
+    border-radius: 6px !important;
+    cursor: pointer;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+}
+
+.login-box .btn-faculty:hover {
+    background: linear-gradient(135deg, #16a34a, #15803d) !important;
+    transform: scale(1.02);
+}
+
+/* Register button */
+.login-box .btn-register {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #111;
+}
+.login-box .btn-register:hover {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    transform: scale(1.02);
+}
+
+/* Links */
+.register-link{
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #1e3a8a;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+.register-link:hover {
+    color: #f59e0b;
+}
+/* Extra link (Back to Home) */
+.extra-link a {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 14px;
+    color: #2563eb;          /* blue text */
+    text-decoration: none;
+    background: #f1f5f9;     /* light gray bg */
+    padding: 8px 14px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.extra-link a:hover {
+    background: #e2e8f0;     /* slightly darker gray */
+    color: #1d4ed8;          /* darker blue */
+}
+
+/* Messages */
+#msg-container {
+    margin-bottom: 10px;
+}
+#msg-container p {
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+#msg-container p.error {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+#msg-container p.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.input-box:focus {
+    border-color: #f39c12;
+    outline: none;
+}

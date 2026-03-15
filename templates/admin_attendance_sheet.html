@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Attendance Sheet{% endblock %}
+
+{% block content %}
+<div class="attendance-sheet-page"> 
+
+  <h2 class="page-title">Attendance Sheet</h2>
+
+  <!-- Messages -->
+    {% if messages %}
+        <div id="msg-container">
+            {% for message in messages %}
+                <p class="{{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        <script>
+          setTimeout(function() {
+            let msgBox = document.getElementById("msg-container");
+            if (msgBox) {
+              msgBox.style.transition = "opacity 0.5s ease";
+              msgBox.style.opacity = "0";
+              setTimeout(() => msgBox.remove(), 500);
+            }
+          }, 3000);
+        </script>
+    {% endif %}
+
+  {% if not bookings %}
+    <div class="empty-state">
+      <p>No bookings found for this selection. Go back and choose another subject/date/slot.</p>
+      <p><a href="{% url 'attendance_selector' %}" class="btn btn-warning">Back</a></p>
+    </div>
+  {% else %}
+    <div class="sheet-header">
+  <p><strong>Subject:</strong> {{ sheet.subject.code }} - {{ sheet.subject.name }}</p>
+  <p><strong>Date:</strong> {{ sheet.date }}</p>
+  <p><strong>Assigned Faculty:</strong>
+    {% if sheet.assigned_faculty %}
+      {{ sheet.assigned_faculty.get_full_name|default:sheet.assigned_faculty.username }}
+    {% else %}
+      <em>Not assigned</em>
+    {% endif %}
+  </p>
+</div>
+
+
+    <form method="POST" action="{% url 'attendance_show' %}" class="assign-form">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="assign">
+      <input type="hidden" name="sheet_id" value="{{ sheet.id }}">
+
+      <label>Assign to faculty:</label>
+      <select name="faculty_id" required>
+        <option value="">-- Select faculty --</option>
+        {% for f in faculties %}
+          <option value="{{ f.id }}" {% if sheet.assigned_faculty and sheet.assigned_faculty.id == f.id %}selected{% endif %}>
+            {{ f.get_full_name|default:f.username }}
+          </option>
+        {% endfor %}
+      </select>
+
+      <button type="submit" class="btn btn-success">Assign</button>
+      <a href="{% url 'attendance_selector' %}" class="btn btn-warning">Back</a>
+      <a href="{% url 'attendance_export_word' sheet.id %}" class="btn btn-secondary">Download Attendance Sheet</a>
+
+    </form>
+
+    <hr/>
+
+    <table class="attendance-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Signature</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for b in bookings %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ b.student.student_id|default:"-" }}</td>
+            <td>{{ b.student.get_full_name|default:b.student.username }}</td>
+            <td class="signature-cell"></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+{% endblock %}

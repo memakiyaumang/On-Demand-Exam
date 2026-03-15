@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Update Room Assignment</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label>Room Number:</label>
+        <input type="text" name="room" value="{{ room.room }}" required>
+
+        <label>Start Time:</label>
+        <input type="time" name="start_time" value="{{ room.start_time }}" required>
+
+        <label>End Time:</label>
+        <input type="time" name="end_time" value="{{ room.end_time }}" required>
+
+        <button type="submit" class="btn btn-primary mt-3">Update</button>
+        <a href="{% url 'assigned_rooms' %}?subject={{ room.subject.id }}&date={{ room.date|date:'Y-m-d' }}" class="btn btn-secondary mt-3">Cancel</a>
+    </form>
+</div>
+{% endblock %}
